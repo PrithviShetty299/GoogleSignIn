@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <meta name="google-signin-client_id" content="937861414531-137o23sdum0k51m32us1im5v08rgp18j.apps.googleusercontent.com">
+    <title>Google Sign In</title>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script typeof="text/javascript">
+        function onSignIn(googleUser){
+            var profile = googleUser.getBasicProfile();
+            /*document.getElementById('profileinfo').innerHTML= profile.getName() + "<br>" +
+                "<a href ='mailto:'"+ profile.getEmail()+ "'>"+
+                profile.getEmail()+ "</a>"+"<br>"+"<img src='"+ profile.getImageUrl()+ "' alt=""/>";*/
+            $(".g-signin2").css("display", "none");
+            $(".data").css("display", "block");
+            $("#pic").attr("src", profile.getImageUrl());
+            $("#email").text(profile.getEmail());
+        }
+        function signOut(){
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                alert("You have been successfully signed out");
+                $(".g-signin2").css("display", "block");
+                $(".data").css("display", "none");
+            });
+        }
+    </script>
+    <style>
+        .g-signin2{
+            margin-left: 700px;
+            margin-top: 300px;
+        }
+        .data{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <div class="data">
+        <p>Account Details</p>                       
+        <img alt="Account image not available" id="pic" class="img-circle" height="180" width="180">
+        <p>Email Address</p>                                                                                                
+        <p id="email" class="alert-danger"> </p>
+        <button onclick="signOut()" class="btn-danger">Sign Out</button>
+
+    </div>
+</body>
+</html>
